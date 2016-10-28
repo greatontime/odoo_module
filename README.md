@@ -1,0 +1,1 @@
+# startup odoo module
