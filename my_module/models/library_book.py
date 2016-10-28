@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from openerp import models, fields
+from openerp.addons import decimal_precision as dp
 class LibraryBook(models.Model) :
     _name = 'library.book'
     _description = 'Library Book'
@@ -45,3 +46,31 @@ class LibraryBook(models.Model) :
         (14, 4), #Optional precision (total, decimals),
     )
     author_ids = fields.Many2many('res.partner',string='Authors')
+    cost_price = fields.Float(
+        'Book Cost', dp.get_precision('Book Price')
+    )
+    currency_id = fields.Many2one(
+        'res.currency', string='Currency'
+    )
+    retail_price = fields.Monetary(
+        'Retail Price',
+        # Optional: currency_field='currency_id',
+    )
+    publisher_id = fields.Many2one(
+        'res.partner', string='Publisher',
+        #optional :
+        ondelete='set null',
+        context={},
+        domain=[],
+    )
+
+class ResPartner(models.Model):
+    _inherit = 'res.partner'
+    book_ids = fields.One2many(
+        'library.book', 'publisher_id',
+        string='Published Books')
+    #book_ids = fields.Many2many(
+    #    'library.book',
+    #    string='Authored Books',
+        # relation='library_book_res_partner_rel' # optional
+    #)

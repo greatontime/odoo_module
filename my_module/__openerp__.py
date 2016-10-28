@@ -8,6 +8,6 @@
     'website': "http://www.printmego.com",
     'category': "Uncategorized",
     'version': '9.0.1.0.0',
-    'depends': ['base'],
+    'depends': ['base', 'decimal_precision'],
     'data': ['views/library_book.xml'],
 }
